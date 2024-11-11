@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>GNR E-Learn: exam</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/icon.png" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .quiz-container {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .quiz-result {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .score-history {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/icon.png" alt="" height="50px">GNR<span
+                    style="color: #fb873f;">E-Learn</span></p>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+            style="border: none;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="courses.html" class="nav-item nav-link">Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="team.html" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link">quiz</a>
+                <a href="login.html" class="nav-item nav-link"><i class="fa fa-user"></i></a>
+                <a href="#" class="nav-item nav-link">
+                    <div id="google_translate_element"></div>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 page-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white animated slideInDown">quiz</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">quiz</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <div class="container my-5">
+        <h1>Select Quiz Category</h1>
+        <button onclick="loadQuiz('programming')" class="btn btn-primary">Programming</button>
+        <button onclick="loadQuiz('grammar')" class="btn btn-secondary">Grammar</button>
+        <button onclick="loadQuiz('vocabulary')" class="btn btn-primary">Vocabulary</button>
+        <button onclick="loadQuiz('speech')" class="btn btn-secondary">Speech</button>
+        <button onclick="loadQuiz('pronunciation')" class="btn btn-primary">Pronunciation</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz-section" class="container">
+        <h2 id="quiz-category"></h2>
+        <form id="quiz-form"></form>
+        <button onclick="submitQuiz()" class="btn btn-success mt-3">Submit</button>
+        <p id="score" class="mt-3"></p>
+        <h4>Score History:</h4>
+        <ul id="score-history"></ul>
+    </div>
+
+    <!-- JavaScript -->
+   
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-3">Quick Link</h4>
+                    <p><a class="text-light" href="about.html">About Us</a></p>
+                    <p><a class="text-light" href="contact.html">quiz</a></p>
+                    <p><a class="text-light" href="">Privacy Policy</a></p>
+                    <p><a class="text-light" href="">Terms & Condition</a></p>
+                    <p><a class="text-light" href="">FAQs & Help</a></p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>veltech collage, avadi,chennai</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 9392362679</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>gopalakrishnamyla18@gmail.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-3">Subscribe to our Newsletter</h4>
+                    <p>Subscribe now and join our growing community of learners committed to lifelong education!</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <form action="#">
+                            <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="email"
+                                placeholder="Your email" required>
+                            <button type="submit"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"><a
+                                    href="mailto:keertidvcorai@gmail.com">Subscribe</a></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">GNR E-Learn</a>, All Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Quiz Script -->
+    <script>
+        const quizzes = {
+            programming: {
+                title: "Programming Quiz",
+                questions: {
+                    question1: { text: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Text Machine Language", "Hyperlinking Text Marking Language"], answer: "Hyper Text Markup Language" },
+                    question2: { text: "What is the output of 3+2 in JavaScript?", options: ["32", "5", "Error"], answer: "5" }
+                }
+            },
+            grammar: {
+                title: "Grammar Quiz",
+                questions: {
+                    question1: { text: "Choose the correct spelling:", options: ["Recieve", "Receive", "Reciept"], answer: "Receive" },
+                    question2: { text: "Fill in the blank: I have ___ apples.", options: ["any", "some", "much"], answer: "some" }
+                }
+            },
+            vocabulary: {
+                title: "Vocabulary Quiz",
+                questions: {
+                    question1: { text: "Which word means 'to begin something'?", options: ["Commence", "Terminate", "Delay"], answer: "Commence" },
+                    question2: { text: "Which word is a synonym for 'happy'?", options: ["Sad", "Elated", "Angry"], answer: "Elated" }
+                }
+            },
+            speech: {
+                title: "Speech Quiz",
+                questions: {
+                    question1: { text: "Which of the following is a powerful speech technique?", options: ["Monotone voice", "Varying pitch", "Low volume"], answer: "Varying pitch" },
+                    question2: { text: "Speech that is clearly articulated is called?", options: ["Mumbled", "Loud", "Articulate"], answer: "Articulate" }
+                }
+            },
+            pronunciation: {
+                title: "Pronunciation Quiz",
+                questions: {
+                    question1: { text: "How is the 's' in 'measure' pronounced?", options: ["Like 's' in 'snake'", "Like 'z' in 'zoo'", "Like 'zh' in 'vision'"], answer: "Like 'zh' in 'vision'" },
+                    question2: { text: "Which syllable is stressed in the word 'computer'?", options: ["First", "Second", "Third"], answer: "Second" }
+                }
+            }
+        };
+
+        let currentQuiz = null;
+        let scoreHistory = [];
+
+        function loadQuiz(category) {
+            currentQuiz = quizzes[category];
+            document.getElementById("quiz-category").innerText = currentQuiz.title;
+            const quizForm = document.getElementById("quiz-form");
+            quizForm.innerHTML = "";
+
+            for (let key in currentQuiz.questions) {
+                const question = currentQuiz.questions[key];
+                const questionElement = document.createElement("div");
+                questionElement.classList.add("mb-3");
+
+                questionElement.innerHTML = `<p>${question.text}</p>`;
+                question.options.forEach(option => {
+                    questionElement.innerHTML += `
+                        <div>
+                            <input type="radio" name="${key}" value="${option}">
+                            <label>${option}</label>
+                        </div>`;
+                });
+                quizForm.appendChild(questionElement);
+            }
+        }
+
+        function submitQuiz() {
+            if (!currentQuiz) {
+                alert("Please select a quiz category first.");
+                return;
+            }
+
+            let score = 0;
+            let totalQuestions = Object.keys(currentQuiz.questions).length;
+
+            for (let key in currentQuiz.questions) {
+                const selectedOption = document.querySelector(`input[name="${key}"]:checked`);
+                if (selectedOption) {
+                    const answer = selectedOption.value;
+                    const correctAnswer = currentQuiz.questions[key].answer;
+                    if (answer === correctAnswer) {
+                        score++;
+                        selectedOption.parentElement.classList.add("correct");
+                    } else {
+                        selectedOption.parentElement.classList.add("incorrect");
+                    }
+                }
+            }
+
+            const resultText = `You scored ${score} out of ${totalQuestions}`;
+            document.getElementById("score").innerText = resultText;
+
+            scoreHistory.push({ category: currentQuiz.title, score: resultText });
+            updateScoreHistory();
+        }
+
+        function updateScoreHistory() {
+            const historyElement = document.getElementById("score-history");
+            historyElement.innerHTML = "";
+            scoreHistory.forEach((entry, index) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${entry.category} - Attempt ${index + 1}: ${entry.score}`;
+                historyElement.appendChild(listItem);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
